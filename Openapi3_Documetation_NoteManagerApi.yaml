@@ -1,0 +1,63 @@
+Openapi: "3.0.0"
+
+info:
+  title: NoteManager
+  version: 1.0.0
+  description: Api for note management.
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+
+paths:
+  /Notebooks:
+    get:
+      responses:
+        '200':
+          description: Successfully returned a json object of all notebooks
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /Notebooks/{notebook_id}:
+    get:
+      description: JSON Object of that particular notebook.
+      responses:
+        '200':
+          description: notebook found and JSON object returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          description: notebook not found
+
+    delete:
+      description: Delete particular notebook.
+       '204':
+          description: notebook deleted successfully
+        '404':
+          description: notebook not found
+
+  /Notebooks/Add:
+    description: Let user Add a notebook.
+    parameters:
+      - note: notebook_id
+        in: query
+        description: notebook_id
+        schema:
+          type: string
+    requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+    responses:
+      '204':
+        description: notebook successfully added
+      '404'
+        description: notebook with same id found, hence notebook not added
